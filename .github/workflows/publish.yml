@@ -13,7 +13,7 @@ jobs:
     needs: build
     uses: flexbase-eng/.github/.github/workflows/typescript.sonarcloud.yml@main
     with:
-      project_key: flexbase-eng_http-client-middleware
+      project_key: flexbase-eng_persona-node-client
     secrets: inherit
 
   publish:
