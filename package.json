@@ -20,7 +20,7 @@
     "Bob Beaty <bob@flexbase.app>"
   ],
   "engines": {
-    "node": ">=10.*"
+    "node": ">=12.*"
   },
   "main": "build/index.js",
   "types": "build/index.d.ts",
