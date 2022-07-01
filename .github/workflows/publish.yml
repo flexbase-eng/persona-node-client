@@ -1,0 +1,22 @@
+name: Deploy Package
+on:
+  push:
+    branches: main
+
+jobs:
+  build:
+    uses: flexbase-eng/.github/.github/workflows/typescript.build.yml@main
+    with:
+      package_folder: output
+
+  coverage:
+    needs: build
+    uses: flexbase-eng/.github/.github/workflows/typescript.sonarcloud.yml@main
+    with:
+      project_key: flexbase-eng_http-client-middleware
+    secrets: inherit
+
+  publish:
+    needs: coverage
+    uses: flexbase-eng/.github/.github/workflows/typescript.publish.npm.yml@main
+    secrets: inherit
