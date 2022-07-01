@@ -5,7 +5,7 @@ import { setTimeout } from 'timers/promises'
 import { mkHeaders, isEmpty } from '../'
 
 export class DatabaseApi {
-  client: Persona;
+  client: Persona
 
   constructor(client: Persona, _options?: PersonaOptions) {
     this.client = client

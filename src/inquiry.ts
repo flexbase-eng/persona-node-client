@@ -73,7 +73,7 @@ export interface InquiryField {
 import { mkHeaders, isEmpty, mkError } from './'
 
 export class InquiryApi {
-  client: Persona;
+  client: Persona
 
   constructor(client: Persona, _options?: PersonaOptions) {
     this.client = client
@@ -338,7 +338,7 @@ export class InquiryApi {
       `inquiries/${inquiryId}/approve`,
       mkHeaders(options),
       undefined,
-      { meta: { comment }},
+      { meta: { comment } },
     )
     if ((resp?.response?.status >= 400) || !isEmpty(resp?.payload?.errors)) {
       return {
@@ -372,7 +372,7 @@ export class InquiryApi {
       `inquiries/${inquiryId}/decline`,
       mkHeaders(options),
       undefined,
-      { meta: { comment }},
+      { meta: { comment } },
     )
     if ((resp?.response?.status >= 400) || !isEmpty(resp?.payload?.errors)) {
       return {

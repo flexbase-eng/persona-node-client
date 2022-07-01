@@ -33,10 +33,10 @@ export interface VerificationCheck {
   metadata: any;
 }
 
-import { mkHeaders, isEmpty } from '../'
+import { isEmpty } from '../'
 
 export class VerificationApi {
-  client: Persona;
+  client: Persona
   database: DatabaseApi
 
   constructor(client: Persona, options?: PersonaOptions) {

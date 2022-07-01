@@ -1,4 +1,3 @@
-import { v4 as uuidv4 } from 'uuid'
 import { Persona } from '../src/index'
 
 (async () => {
@@ -39,7 +38,7 @@ import { Persona } from '../src/index'
     countryCode: 'US',
   })
   console.log('TWO', two)
-  const verificationId = two?.verification?.id!
+  let verificationId = two?.verification?.id!
   if (two.success) {
     console.log(`Success! created the Database Verification ${verificationId}`)
   } else {
@@ -73,16 +72,16 @@ import { Persona } from '../src/index'
   /*
    * Wait 8-10 sec - the typical time quoted by the Persona crew...
    */
-  const verificationId = 'ver_NhsMEqRLH76MixnvqbxjiZKu'
+  verificationId = 'ver_NhsMEqRLH76MixnvqbxjiZKu'
   console.log('getting the submitted Verification by id...')
-  const fou = await client.verification.database.byId(verificationId)
-  console.log('FOU', fou)
-  if (fou.success) {
+  const fiv = await client.verification.database.byId(verificationId)
+  console.log('FIV', fiv)
+  if (fiv.success) {
     console.log(`Success! fetched the Verification ${verificationId}`)
   } else {
     console.log('Error! Fetching Verification failed, and the output is:')
-    console.log(fou)
-    console.log('ERROR', fou?.error)
+    console.log(fiv)
+    console.log('ERROR', fiv?.error)
   }
 
 })()
