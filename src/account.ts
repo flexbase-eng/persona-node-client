@@ -35,7 +35,7 @@ export interface Account {
 import { mkHeaders, isEmpty } from './'
 
 export class AccountApi {
-  client: Persona;
+  client: Persona
 
   constructor(client: Persona, _options?: PersonaOptions) {
     this.client = client
