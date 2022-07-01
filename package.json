@@ -57,7 +57,8 @@
     "test": "echo 'This project currently uses manually run end-to-end tests; see https://github.com/flexbase-eng/persona-node-client/tree/main#development for setup instructions.'",
     "bump:major": "bin/verchg major",
     "bump:minor": "bin/verchg minor",
-    "bump:bugfix": "bin/verchg bugfix"
+    "bump:bugfix": "bin/verchg bugfix",
+    "packr": "packr"
   },
   "packr": {
     "output": "output",
@@ -79,7 +80,7 @@
       "keywords"
     ],
     "include": [
-      "dist",
+      "build",
       "README.md",
       "LICENSE",
       "yarn.lock"
