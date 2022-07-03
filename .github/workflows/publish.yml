@@ -7,7 +7,9 @@ jobs:
   build:
     uses: flexbase-eng/.github/.github/workflows/typescript.build.yml@main
     with:
-      package_folder: output
+      package_manager: npm
+      package_folder: build
+      use_packr: false
 
   coverage:
     needs: build
@@ -19,4 +21,6 @@ jobs:
   publish:
     needs: coverage
     uses: flexbase-eng/.github/.github/workflows/typescript.publish.npm.yml@main
+    with: 
+      package_manager: npm
     secrets: inherit

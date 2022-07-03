@@ -28,7 +28,6 @@
     "build"
   ],
   "devDependencies": {
-    "@flexbase/packr": "^1.2.0",
     "@types/node-fetch": "^2.5.10",
     "@types/uuid": "^8.3.4",
     "@typescript-eslint/parser": "^5.30.0",
@@ -52,6 +51,7 @@
   },
   "scripts": {
     "ts": "ts-node -r dotenv/config",
+    "build": "tsc",
     "prepublishOnly": "tsc --declaration",
     "lint": "eslint . --ext .ts --fix",
     "test": "echo 'This project currently uses manually run end-to-end tests; see https://github.com/flexbase-eng/persona-node-client/tree/main#development for setup instructions.'",
@@ -59,31 +59,5 @@
     "bump:minor": "bin/verchg minor",
     "bump:bugfix": "bin/verchg bugfix",
     "packr": "packr"
-  },
-  "packr": {
-    "output": "output",
-    "properties": [
-      "name",
-      "version",
-      "description",
-      "main",
-      "module",
-      "types",
-      "homepage",
-      "repository",
-      "bugs",
-      "author",
-      "license",
-      "dependencies",
-      "type",
-      "bin",
-      "keywords"
-    ],
-    "include": [
-      "build",
-      "README.md",
-      "LICENSE",
-      "yarn.lock"
-    ]
   }
 }

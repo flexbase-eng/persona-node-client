@@ -5,11 +5,13 @@
   "compilerOptions": {
     "target": "es5",
     "module": "commonjs",
-    "outDir": "build",
+    "outDir": "dist",
     "strict": true,
     "esModuleInterop": true,
     "skipLibCheck": true,
-    "forceConsistentCasingInFileNames": true
+    "forceConsistentCasingInFileNames": true,
+    "sourceMap": true,
+    "baseUrl": ".",
   },
   "include": ["./src/**/*"]
 }
