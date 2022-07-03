@@ -1,9 +1,7 @@
 name: Deploy Package
 on:
   push:
-    branches: main
-  pull_request:
-    branches: [ main ]
+    branches: [main, chore-publish-package]
 
 jobs:
   build:
