@@ -8,7 +8,7 @@ jobs:
     uses: flexbase-eng/.github/.github/workflows/typescript.build.yml@main
     with:
       package_manager: npm
-      package_folder: build
+      package_folder: output
 
   coverage:
     needs: build
