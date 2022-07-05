@@ -28,6 +28,8 @@
     "build"
   ],
   "devDependencies": {
+    "@flexbase/packr": "^1.2.0",
+    "@types/jest": "^28.1.4",
     "@types/node-fetch": "^2.5.10",
     "@types/uuid": "^8.3.4",
     "@typescript-eslint/parser": "^5.30.0",
@@ -35,8 +37,11 @@
     "dotenv": "^9.0.2",
     "eslint": "^8.18.0",
     "eslint-config-prettier": "^8.5.0",
+    "eslint-plugin-jest": "^26.5.3",
     "eslint-plugin-prettier": "^4.2.1",
+    "jest": "^28.1.2",
     "prettier": "^2.7.1",
+    "ts-jest": "^28.0.5",
     "ts-node": "^10.8.1",
     "typescript": "^4.7.4"
   },
@@ -59,5 +64,30 @@
     "bump:minor": "bin/verchg minor",
     "bump:bugfix": "bin/verchg bugfix",
     "packr": "packr"
+  },
+  "packr": {
+    "output": "output",
+    "properties": [
+      "name",
+      "version",
+      "description",
+      "main",
+      "module",
+      "types",
+      "homepage",
+      "repository",
+      "bugs",
+      "author",
+      "license",
+      "dependencies",
+      "type",
+      "bin",
+      "keywords"
+    ],
+    "include": [
+      "dist",
+      "README.md",
+      "package-lock.json"
+    ]
   }
 }

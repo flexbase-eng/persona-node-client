@@ -9,7 +9,6 @@ jobs:
     with:
       package_manager: npm
       package_folder: build
-      use_packr: false
 
   coverage:
     needs: build
