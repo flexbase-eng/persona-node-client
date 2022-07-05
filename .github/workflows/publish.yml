@@ -5,21 +5,21 @@ on:
 
 jobs:
   build:
-    uses: flexbase-eng/.github/.github/workflows/typescript.build.yml@chore-add-publish-npm
+    uses: flexbase-eng/.github/.github/workflows/typescript.build.yml@main
     with:
       package_manager: npm
       package_folder: build
 
   coverage:
     needs: build
-    uses: flexbase-eng/.github/.github/workflows/typescript.sonarcloud.yml@chore-add-publish-npm
+    uses: flexbase-eng/.github/.github/workflows/typescript.sonarcloud.yml@main
     with:
       project_key: flexbase-eng_persona-node-client
     secrets: inherit
 
   publish:
     needs: coverage
-    uses: flexbase-eng/.github/.github/workflows/typescript.publish.npm.yml@chore-add-publish-npm
+    uses: flexbase-eng/.github/.github/workflows/typescript.publish.npm.yml@main
     with: 
       package_manager: npm
       tag: beta
