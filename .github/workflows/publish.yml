@@ -1,7 +1,7 @@
 name: Deploy Package
 on:
   push:
-    branches: [main]
+    branches: [main, chore-publish-package]
 
 jobs:
   build:
@@ -22,4 +22,5 @@ jobs:
     uses: flexbase-eng/.github/.github/workflows/typescript.publish.npm.yml@main
     with: 
       package_manager: npm
+      tag: beta
     secrets: inherit

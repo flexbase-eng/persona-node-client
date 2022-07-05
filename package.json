@@ -86,7 +86,7 @@
       "keywords"
     ],
     "include": [
-      "dist",
+      "build",
       "README.md",
       "package-lock.json"
     ]
