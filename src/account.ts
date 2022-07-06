@@ -1,7 +1,12 @@
 import type { Persona, PersonaOptions, PersonaError, PersonaCallDetails } from './'
 
 export interface Account {
+  type?: string;
   id?: string;
+  attributes?: AccountAttributes;
+}
+
+export interface AccountAttributes {
   referenceId?: string;
   nameFirst?: string;
   nameMiddle?: string;
@@ -32,7 +37,7 @@ export interface Account {
   updatedAt?: string;
 }
 
-import { mkHeaders, isEmpty } from './'
+import { mkHeaders, mkQueryParams, isEmpty } from './'
 
 export class AccountApi {
   client: Persona
@@ -50,7 +55,7 @@ export class AccountApi {
   async list(options?: {
     beforeId?: string,
     afterId?: string,
-    size?: string,
+    size?: number,
     filterRefId?: string,
   }): Promise<{
     success: boolean,
@@ -61,7 +66,8 @@ export class AccountApi {
     const resp = await this.client.fire(
       'GET',
       'accounts',
-      mkHeaders(options),
+      undefined,
+      mkQueryParams(options),
     )
     if ((resp?.response?.status >= 400) || !isEmpty(resp?.payload?.error)) {
       return {
@@ -70,11 +76,7 @@ export class AccountApi {
         details: resp?.details,
       }
     }
-    // build up the list so that it makes a little more sense to the caller
-    const accounts = resp?.payload?.data.map((elem: any) => {
-      return { ...elem.attributes, id: elem.id }
-    })
-    return { success: true, accounts, details: resp?.details }
+    return { success: true, accounts: resp?.payload?.data, details: resp?.details }
   }
 
   /*
@@ -98,12 +100,7 @@ export class AccountApi {
         details: resp?.details,
       }
     }
-    // build up the account from the data into, and out of, Persona
-    const account = {
-      ...resp?.payload?.data?.attributes,
-      id: resp?.payload?.data?.id,
-    }
-    return { success: true, account, details: resp?.details }
+    return { success: true, account: resp?.payload?.data, details: resp?.details }
   }
 
   /*
@@ -111,7 +108,7 @@ export class AccountApi {
    * be the person, or identity, that can later be the subject of an Inquiry,
    * and so will be later referenced by it's 'accountId'.
    */
-  async create(data: Partial<Account>, options?: {
+  async create(data: Partial<AccountAttributes>, options?: {
     idempotencyKey?: string,
   }): Promise<{
     success: boolean,
@@ -133,13 +130,7 @@ export class AccountApi {
         details: resp?.details,
       }
     }
-    // build up the account from the data into, and out of, Persona
-    const account = {
-      ...data,
-      ...resp?.payload?.data?.attributes,
-      id: resp?.payload?.data?.id,
-    }
-    return { success: true, account, details: resp?.details }
+    return { success: true, account: resp?.payload?.data, details: resp?.details }
   }
 
   /*
@@ -177,12 +168,7 @@ export class AccountApi {
         details: resp?.details,
       }
     }
-    // build up the account from the data into, and out of, Persona
-    const account = {
-      ...resp?.payload?.data?.attributes,
-      id: resp?.payload?.data?.id,
-    }
-    return { success: true, account, details: resp?.details }
+    return { success: true, account: resp?.payload?.data, details: resp?.details }
   }
 
   /*
@@ -192,7 +178,7 @@ export class AccountApi {
    * note that you can update a 'deleted' account as it's only been
    * soft-deleted.
    */
-  async update(accountId: string, data: Partial<Account>, options?: {
+  async update(accountId: string, data: Partial<AccountAttributes>, options?: {
     idempotencyKey?: string,
   }): Promise<{
     success: boolean,
@@ -214,12 +200,7 @@ export class AccountApi {
         details: resp?.details,
       }
     }
-    // build up the account from the data into, and out of, Persona
-    const account = {
-      ...resp?.payload?.data?.attributes,
-      id: resp?.payload?.data?.id,
-    }
-    return { success: true, account, details: resp?.details }
+    return { success: true, account: resp?.payload?.data, details: resp?.details }
   }
 
   /*
@@ -251,12 +232,7 @@ export class AccountApi {
         details: resp?.details,
       }
     }
-    // build up the account from the data into, and out of, Persona
-    const account = {
-      ...resp?.payload?.data?.attributes,
-      id: resp?.payload?.data?.id,
-    }
-    return { success: true, account, details: resp?.details }
+    return { success: true, account: resp?.payload?.data, details: resp?.details }
   }
 
   /*
@@ -288,12 +264,7 @@ export class AccountApi {
         details: resp?.details,
       }
     }
-    // build up the account from the data into, and out of, Persona
-    const account = {
-      ...resp?.payload?.data?.attributes,
-      id: resp?.payload?.data?.id,
-    }
-    return { success: true, account, details: resp?.details }
+    return { success: true, account: resp?.payload?.data, details: resp?.details }
   }
 
   /*
@@ -325,12 +296,7 @@ export class AccountApi {
         details: resp?.details,
       }
     }
-    // build up the account from the data into, and out of, Persona
-    const account = {
-      ...resp?.payload?.data?.attributes,
-      id: resp?.payload?.data?.id,
-    }
-    return { success: true, account, details: resp?.details }
+    return { success: true, account: resp?.payload?.data, details: resp?.details }
   }
 
   /*
@@ -372,11 +338,6 @@ export class AccountApi {
         details: resp?.details,
       }
     }
-    // build up the account from the data into, and out of, Persona
-    const account = {
-      ...resp?.payload?.data?.attributes,
-      id: resp?.payload?.data?.id,
-    }
-    return { success: true, account, details: resp?.details }
+    return { success: true, account: resp?.payload?.data, details: resp?.details }
   }
 }

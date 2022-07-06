@@ -1,7 +1,13 @@
 import type { Persona, PersonaOptions, PersonaError, PersonaCallDetails } from './'
 
 export interface Inquiry {
+  type?: string;
   id?: string;
+  attributes?: InquiryAttributes;
+  relationships?: InquiryRelationships;
+}
+
+export interface InquiryAttributes {
   referenceId?: string;
   status?: string;
   note?: string;
@@ -65,12 +71,31 @@ export interface Inquiry {
   };
 }
 
+export interface InquiryRelationships {
+  account: { data?: InquiryReference };
+  template: { data?: InquiryReference };
+  inquiryTemplate: { data?: InquiryReference };
+  inquiryTemplateVersion: { data?: InquiryReference };
+  reviewer: { data?: InquiryReference };
+  reports: { data?: InquiryReference[] };
+  verifications: { data?: InquiryReference[] };
+  sessions: { data?: InquiryReference[] };
+  documents: { data?: InquiryReference[] };
+  selfies: { data?: InquiryReference[] };
+}
+
 export interface InquiryField {
   type?: string;
   value?: string | number;
 }
 
-import { mkHeaders, isEmpty, mkError } from './'
+// this interface has a 'type' like account, inquiry, etc, and an 'id'...
+export interface InquiryReference {
+  type?: string;
+  id?: string;
+}
+
+import { mkHeaders, mkQueryParams, isEmpty, mkError } from './'
 
 export class InquiryApi {
   client: Persona
@@ -88,7 +113,7 @@ export class InquiryApi {
   async list(options?: {
     beforeId?: string,
     afterId?: string,
-    size?: string,
+    size?: number,
     filterRefId?: string,
     filterAcctId?: string,
   }): Promise<{
@@ -100,7 +125,8 @@ export class InquiryApi {
     const resp = await this.client.fire(
       'GET',
       'inquiries',
-      mkHeaders(options),
+      undefined,
+      mkQueryParams(options),
     )
     if ((resp?.response?.status >= 400) || !isEmpty(resp?.payload?.error)) {
       return {
@@ -109,11 +135,7 @@ export class InquiryApi {
         details: resp?.details,
       }
     }
-    // build up the list so that it makes a little more sense to the caller
-    const inquiries = resp?.payload?.data.map((elem: any) => {
-      return { ...elem.attributes, id: elem.id }
-    })
-    return { success: true, inquiries, details: resp?.details }
+    return { success: true, inquiries: resp?.payload?.data, details: resp?.details }
   }
 
   /*
@@ -137,12 +159,7 @@ export class InquiryApi {
         details: resp?.details,
       }
     }
-    // build up the inquiry from the data into, and out of, Persona
-    const inquiry = {
-      ...resp?.payload?.data?.attributes,
-      id: resp?.payload?.data?.id,
-    }
-    return { success: true, inquiry, details: resp?.details }
+    return { success: true, inquiry: resp?.payload?.data, details: resp?.details }
   }
 
   /*
@@ -242,13 +259,7 @@ export class InquiryApi {
         details: resp?.details,
       }
     }
-    // build up the inquiry from the data into, and out of, Persona
-    const inquiry = {
-      ...data,
-      ...resp?.payload?.data?.attributes,
-      id: resp?.payload?.data?.id,
-    }
-    return { success: true, inquiry, details: resp?.details }
+    return { success: true, inquiry: resp?.payload?.data, details: resp?.details }
   }
 
   /*
@@ -278,12 +289,7 @@ export class InquiryApi {
         details: resp?.details,
       }
     }
-    // build up the inquiry from the data into, and out of, Persona
-    const inquiry = {
-      ...resp?.payload?.data?.attributes,
-      id: resp?.payload?.data?.id,
-    }
-    return { success: true, inquiry, details: resp?.details }
+    return { success: true, inquiry: resp?.payload?.data, details: resp?.details }
   }
 
   /*
@@ -313,12 +319,7 @@ export class InquiryApi {
         details: resp?.details,
       }
     }
-    // build up the inquiry from the data into, and out of, Persona
-    const inquiry = {
-      ...resp?.payload?.data?.attributes,
-      id: resp?.payload?.data?.id,
-    }
-    return { success: true, inquiry, details: resp?.details }
+    return { success: true, inquiry: resp?.payload?.data, details: resp?.details }
   }
 
   /*
@@ -347,12 +348,7 @@ export class InquiryApi {
         details: resp?.details,
       }
     }
-    // build up the inquiry from the data into, and out of, Persona
-    const inquiry = {
-      ...resp?.payload?.data?.attributes,
-      id: resp?.payload?.data?.id,
-    }
-    return { success: true, inquiry, details: resp?.details }
+    return { success: true, inquiry: resp?.payload?.data, details: resp?.details }
   }
 
   /*
@@ -381,12 +377,7 @@ export class InquiryApi {
         details: resp?.details,
       }
     }
-    // build up the inquiry from the data into, and out of, Persona
-    const inquiry = {
-      ...resp?.payload?.data?.attributes,
-      id: resp?.payload?.data?.id,
-    }
-    return { success: true, inquiry, details: resp?.details }
+    return { success: true, inquiry: resp?.payload?.data, details: resp?.details }
   }
 
   /*
@@ -417,12 +408,7 @@ export class InquiryApi {
         details: resp?.details,
       }
     }
-    // build up the inquiry from the data into, and out of, Persona
-    const inquiry = {
-      ...resp?.payload?.data?.attributes,
-      id: resp?.payload?.data?.id,
-    }
-    return { success: true, inquiry, details: resp?.details }
+    return { success: true, inquiry: resp?.payload?.data, details: resp?.details }
   }
 
   /*
@@ -452,12 +438,7 @@ export class InquiryApi {
         details: resp?.details,
       }
     }
-    // build up the inquiry from the data into, and out of, Persona
-    const inquiry = {
-      ...resp?.payload?.data?.attributes,
-      id: resp?.payload?.data?.id,
-    }
-    return { success: true, inquiry, details: resp?.details }
+    return { success: true, inquiry: resp?.payload?.data, details: resp?.details }
   }
 
   /*
@@ -487,12 +468,7 @@ export class InquiryApi {
         details: resp?.details,
       }
     }
-    // build up the inquiry from the data into, and out of, Persona
-    const inquiry = {
-      ...resp?.payload?.data?.attributes,
-      id: resp?.payload?.data?.id,
-    }
-    return { success: true, inquiry, details: resp?.details }
+    return { success: true, inquiry: resp?.payload?.data, details: resp?.details }
   }
 
   /*
@@ -522,11 +498,6 @@ export class InquiryApi {
         details: resp?.details,
       }
     }
-    // build up the inquiry from the data into, and out of, Persona
-    const inquiry = {
-      ...resp?.payload?.data?.attributes,
-      id: resp?.payload?.data?.id,
-    }
-    return { success: true, inquiry, details: resp?.details }
+    return { success: true, inquiry: resp?.payload?.data, details: resp?.details }
   }
 }

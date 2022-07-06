@@ -5,7 +5,7 @@ import { Persona } from '../src/index'
 
   const TEMPLATE_ID = 'tmpl_PPDFW92MxhJLomjh4gC2tb5x'
 
-  const refId = '7f2ca97f-a110-4f2d-b00e-0d648857db69'
+  const refId = '2eeada65-7f01-44d8-a868-33dd0bf445d9'
 
   console.log('creating new Inquiry based off Database Template...')
   const one = await client.inquiry.create({
@@ -37,14 +37,30 @@ import { Persona } from '../src/index'
     emailAddress: '3hwx94mq@smuggroup.com',
     countryCode: 'US',
   })
-  // console.log('TWO', two)
+  console.log('TWO', two)
   const verificationId = two?.verification?.id!
   if (two.success) {
-    console.log(`Success! ran the Database Verification ${verificationId} : '${two.verification?.status}'`)
+    console.log(`Success! ran the Database Verification ${verificationId} : '${two.verification?.attributes?.status}'`)
   } else {
     console.log('Error! Running Database Verification failed, and the output is:')
     console.log(two)
     console.log('ERROR', two?.error)
   }
+
+  console.log(`getting Inquiry for Database Verification for ${refId}...`)
+  const tre = await client.inquiry.list({ filterRefId: refId })
+  console.log('TRE', tre.inquiries)
+  console.log('TRE-TRE', tre.inquiries![0].relationships!.verifications)
+  const vId = tre.inquiries![0].relationships!.verifications!.data![0].id!
+  if (tre.success) {
+    console.log(`Success! pulled the Database Verification for referenceId ${refId}`)
+  } else {
+    console.log('Error! Pulling Database Verification for referenceId, and the output is:')
+    console.log(tre)
+    console.log('ERROR', tre?.error)
+  }
+
+  const fou = await client.verification.byId(vId)
+  console.log('FOU', fou)
 
 })()

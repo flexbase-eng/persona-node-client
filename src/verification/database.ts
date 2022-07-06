@@ -32,12 +32,7 @@ export class DatabaseApi {
         details: resp?.details,
       }
     }
-    // build up the Verification from the data out of Persona
-    const verification = {
-      ...resp?.payload?.data?.attributes,
-      id: resp?.payload?.data?.id,
-    }
-    return { success: true, verification, details: resp?.details }
+    return { success: true, verification: resp?.payload?.data, details: resp?.details }
   }
 
   /*
@@ -87,12 +82,7 @@ export class DatabaseApi {
         details: resp?.details,
       }
     }
-    // build up the Verification from the data out of Persona
-    const verification = {
-      ...resp?.payload?.data?.attributes,
-      id: resp?.payload?.data?.id,
-    }
-    return { success: true, verification, details: resp?.details }
+    return { success: true, verification: resp?.payload?.data, details: resp?.details }
   }
 
   /*
@@ -116,12 +106,7 @@ export class DatabaseApi {
         details: resp?.details,
       }
     }
-    // build up the Verification from the data out of Persona
-    const verification = {
-      ...resp?.payload?.data?.attributes,
-      id: resp?.payload?.data?.id,
-    }
-    return { success: true, verification, details: resp?.details }
+    return { success: true, verification: resp?.payload?.data, details: resp?.details }
   }
 
   /*

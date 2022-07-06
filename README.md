@@ -87,44 +87,29 @@ and the response will be something like:
   success: true,
   accounts: [
     {
-      referenceId: '03f1a8f1-75ad-435a-8b9e-05dc77f2f61a',
-      createdAt: '2022-06-30T16:25:26.000Z',
-      updatedAt: '2022-06-30T16:25:27.000Z',
-      nameFirst: 'Tralisha',
-      nameMiddle: null,
-      nameLast: 'Fenton',
-      phoneNumber: '903-991-3776',
-      emailAddress: '3hwx94mq@smuggroup.com',
-      addressStreet1: '327 Briarbend Rd',
-      addressStreet2: null,
-      addressCity: 'Goose Creek',
-      addressSubdivision: 'South Carolina',
-      addressPostalCode: '294457778',
-      countryCode: 'US',
-      birthdate: '1998-01-11',
-      socialSecurityNumber: '311-68-1509',
-      tags: [],
-      id: 'act_smwy9CMVW5TzNMH1booyF9W6'
+      type: 'account',
+      id: 'act_ivNy2ZA8HHazkkPDZUWDmo2K',
+      attributes: [Object]
     },
     {
-      referenceId: '5f81c440-088a-4d71-8980-cdd2565abc8f',
-      createdAt: '2022-06-30T11:39:59.000Z',
-      updatedAt: '2022-06-30T11:40:01.000Z',
-      nameFirst: 'Tralisha',
-      nameMiddle: null,
-      nameLast: 'Fenton',
-      phoneNumber: '903-991-3776',
-      emailAddress: '3hwx94mq@smuggroup.com',
-      addressStreet1: '327 Briarbend Rd',
-      addressStreet2: null,
-      addressCity: 'Goose Creek',
-      addressSubdivision: 'South Carolina',
-      addressPostalCode: '294457778',
-      countryCode: 'US',
-      birthdate: '1998-01-11',
-      socialSecurityNumber: '311-68-1509',
-      tags: [],
-      id: 'act_EmjVaPaLqAot2gs2m6PkvsMW'
+      type: 'account',
+      id: 'act_S62jF245bU8pvPKvv9ALYKHM',
+      attributes: [Object]
+    },
+    {
+      type: 'account',
+      id: 'act_e9ZNggooRhGywARBeRLo2e4Q',
+      attributes: [Object]
+    },
+    {
+      type: 'account',
+      id: 'act_2mqkNU3uPecc3vrTf2xDnwkF',
+      attributes: [Object]
+    },
+    {
+      type: 'account',
+      id: 'act_smwy9CMVW5TzNMH1booyF9W6',
+      attributes: [Object]
     },
     ...
   ],
@@ -132,6 +117,31 @@ and the response will be something like:
     requestId: '48b9dda8-083b-4db7-8fdb-74467748db5f',
     runtime: 0.713731
   }
+}
+```
+
+where each of the `[Object]` values in `attributes` looks something like:
+
+```javascript
+{
+  referenceId: '03f1a8f1-75ad-435a-8b9e-05dc77f2f61a',
+  createdAt: '2022-06-30T16:25:26.000Z',
+  updatedAt: '2022-06-30T16:25:27.000Z',
+  nameFirst: 'Tralisha',
+  nameMiddle: null,
+  nameLast: 'Fenton',
+  phoneNumber: '903-991-3776',
+  emailAddress: '3hwx94mq@smuggroup.com',
+  addressStreet1: '327 Briarbend Rd',
+  addressStreet2: null,
+  addressCity: 'Goose Creek',
+  addressSubdivision: 'South Carolina',
+  addressPostalCode: '294457778',
+  countryCode: 'US',
+  birthdate: '1998-01-11',
+  socialSecurityNumber: '111-22-3333',
+  tags: [],
+  id: 'act_smwy9CMVW5TzNMH1booyF9W6'
 }
 ```
 
@@ -186,24 +196,27 @@ something like:
 {
   success: true,
   account: {
-    referenceId: 'ec9ff3f2-d49f-4cf5-9a3a-66bc628c47d1',
-    createdAt: '2022-06-25T11:12:22.000Z',
-    updatedAt: '2022-06-25T13:02:44.000Z',
-    nameFirst: 'Jacob',
-    nameMiddle: null,
-    nameLast: 'Woods',
-    phoneNumber: '680-206-6197',
-    emailAddress: 'yumyum@google.com',
-    addressStreet1: '8601 Sugarlimb Rd',
-    addressStreet2: null,
-    addressCity: 'Loudon',
-    addressSubdivision: 'Tennessee',
-    addressPostalCode: '377746323',
-    countryCode: 'US',
-    birthdate: '1998-01-11',
-    socialSecurityNumber: '111-22-3333',
-    tags: [ 'GRANDMA', 'TRICKY' ],
-    id: 'act_GSzquZ2gyBXsJ9yKB7HJuhW7'
+    type: 'account',
+    id: 'act_GSzquZ2gyBXsJ9yKB7HJuhW7',
+    attributes: {
+      referenceId: 'ec9ff3f2-d49f-4cf5-9a3a-66bc628c47d1',
+      createdAt: '2022-06-25T11:12:22.000Z',
+      updatedAt: '2022-07-06T09:00:28.000Z',
+      nameFirst: 'Jacob',
+      nameMiddle: null,
+      nameLast: 'Woods',
+      phoneNumber: '680-206-6197',
+      emailAddress: 'yumyum@google.com',
+      addressStreet1: '8601 Sugarlimb Rd',
+      addressStreet2: null,
+      addressCity: 'Loudon',
+      addressSubdivision: 'Tennessee',
+      addressPostalCode: '377746323',
+      countryCode: 'US',
+      birthdate: '1998-01-11',
+      socialSecurityNumber: '111-22-3333',
+      tags: [Array]
+    }
   },
   details: {
     requestId: 'be396edb-1999-49ac-acbf-b6694ed56feb',
@@ -214,8 +227,8 @@ something like:
 
 #### [Create an Account](https://docs.withpersona.com/reference/create-an-account)
 
-You can create an Account by passing in at least some parts of the Account
-object:
+You can create an Account by passing in at least some parts of the
+`AccountAttributes` object:
 
 ```typescript
 const resp = await client.account.create({
@@ -241,24 +254,27 @@ and the result will look something like:
 {
   success: true,
   account: {
-    referenceId: '7ab50553-67ee-4b59-9adb-dbce7f37af0a',
-    nameFirst: 'Jacob',
-    nameLast: 'Woods',
-    birthdate: '1998-01-11',
-    addressStreet1: '8601 Sugarlimb Rd',
-    addressCity: 'Loudon',
-    addressSubdivision: 'Tennessee',
-    addressPostalCode: '377746323',
-    countryCode: 'US',
-    emailAddress: 'jwoods@gmail.com',
-    phoneNumber: '312-555-1212',
-    socialSecurityNumber: '111-22-3333',
-    tags: [ 'BAD-ACTOR', 'TROUBLE' ],
-    createdAt: '2022-07-01T10:58:46.000Z',
-    updatedAt: '2022-07-01T10:58:46.000Z',
-    nameMiddle: null,
-    addressStreet2: null,
-    id: 'act_e9ZNggooRhGywARBeRLo2e4Q'
+    type: 'account',
+    id: 'act_GSzquZ2gyBXsJ9yKB7HJuhW7',
+    attributes: {
+      referenceId: '7ab50553-67ee-4b59-9adb-dbce7f37af0a',
+      nameFirst: 'Jacob',
+      nameLast: 'Woods',
+      birthdate: '1998-01-11',
+      addressStreet1: '8601 Sugarlimb Rd',
+      addressCity: 'Loudon',
+      addressSubdivision: 'Tennessee',
+      addressPostalCode: '377746323',
+      countryCode: 'US',
+      emailAddress: 'jwoods@gmail.com',
+      phoneNumber: '312-555-1212',
+      socialSecurityNumber: '111-22-3333',
+      tags: [ 'BAD-ACTOR', 'TROUBLE' ],
+      createdAt: '2022-07-01T10:58:46.000Z',
+      updatedAt: '2022-07-01T10:58:46.000Z',
+      nameMiddle: null,
+      addressStreet2: null,
+    },
   },
   details: {
     requestId: 'efc22741-5d7e-40e5-92b4-7607e841ee57',
@@ -292,24 +308,27 @@ and the result will look something like:
 {
   success: true,
   account: {
-    referenceId: '7ab50553-67ee-4b59-9adb-dbce7f37af0a',
-    createdAt: '2022-07-01T10:58:46.000Z',
-    updatedAt: '2022-07-01T11:06:53.000Z',
-    nameFirst: null,
-    nameMiddle: null,
-    nameLast: null,
-    phoneNumber: null,
-    emailAddress: null,
-    addressStreet1: null,
-    addressStreet2: null,
-    addressCity: null,
-    addressSubdivision: null,
-    addressPostalCode: null,
-    countryCode: null,
-    birthdate: null,
-    socialSecurityNumber: null,
-    tags: [ 'BAD-ACTOR', 'TROUBLE' ],
-    id: 'act_e9ZNggooRhGywARBeRLo2e4Q'
+    type: 'account',
+    id: 'act_e9ZNggooRhGywARBeRLo2e4Q',
+    attributes: {
+      referenceId: '7ab50553-67ee-4b59-9adb-dbce7f37af0a',
+      createdAt: '2022-07-01T10:58:46.000Z',
+      updatedAt: '2022-07-01T11:06:53.000Z',
+      nameFirst: null,
+      nameMiddle: null,
+      nameLast: null,
+      phoneNumber: null,
+      emailAddress: null,
+      addressStreet1: null,
+      addressStreet2: null,
+      addressCity: null,
+      addressSubdivision: null,
+      addressPostalCode: null,
+      countryCode: null,
+      birthdate: null,
+      socialSecurityNumber: null,
+      tags: [ 'BAD-ACTOR', 'TROUBLE' ],
+    },
   },
   details: {
     requestId: 'e988f99c-efe1-4727-af44-ae00d6e870e0',
@@ -428,72 +447,28 @@ and the result will look something like:
   success: true,
   inquiries: [
     {
-      status: 'completed',
-      referenceId: '7f2ca97f-a110-4f2d-b00e-0d648857db69',
-      note: null,
-      behaviors: [Object],
-      tags: [],
-      creator: 'API',
-      reviewerComment: null,
-      createdAt: '2022-07-01T10:36:59.000Z',
-      startedAt: '2022-07-01T10:36:59.000Z',
-      completedAt: '2022-07-01T10:37:00.000Z',
-      failedAt: null,
-      decisionedAt: null,
-      expiredAt: null,
-      redactedAt: null,
-      previousStepName: null,
-      nextStepName: null,
-      nameFirst: 'Tralisha',
-      nameMiddle: null,
-      nameLast: 'Fenton',
-      birthdate: '1998-01-11',
-      addressStreet1: '327 Briarbend Rd',
-      addressStreet2: null,
-      addressCity: 'Goose Creek',
-      addressSubdivision: 'South Carolina',
-      addressSubdivisionAbbr: 'SC',
-      addressPostalCode: '294457778',
-      addressPostalCodeAbbr: '29445',
-      socialSecurityNumber: '311-68-1509',
-      emailAddress: '3hwx94mq@smuggroup.com',
-      phoneNumber: '903-991-3776',
-      fields: [Object],
-      id: 'inq_3BPdDozhzumh245QTmt6Sq5T'
+      type: 'inquiry',
+      id: 'inq_i8EnS9TdG2NqZcXbEQcaPSo9',
+      attributes: [Object],
+      relationships: [Object]
     },
     {
-      status: 'completed',
-      referenceId: '7f2ca97f-a110-4f2d-b00e-0d648857db69',
-      note: null,
-      behaviors: [Object],
-      tags: [],
-      creator: 'API',
-      reviewerComment: null,
-      createdAt: '2022-07-01T10:12:43.000Z',
-      startedAt: '2022-07-01T10:12:43.000Z',
-      completedAt: '2022-07-01T11:42:48.000Z',
-      failedAt: null,
-      decisionedAt: null,
-      expiredAt: null,
-      redactedAt: null,
-      previousStepName: null,
-      nextStepName: null,
-      nameFirst: 'Tralisha',
-      nameMiddle: null,
-      nameLast: 'Fenton',
-      birthdate: '1998-01-11',
-      addressStreet1: '327 Briarbend Rd',
-      addressStreet2: null,
-      addressCity: 'Goose Creek',
-      addressSubdivision: 'South Carolina',
-      addressSubdivisionAbbr: 'SC',
-      addressPostalCode: '294457778',
-      addressPostalCodeAbbr: '29445',
-      socialSecurityNumber: '311-68-1509',
-      emailAddress: '3hwx94mq@smuggroup.com',
-      phoneNumber: '903-991-3776',
-      fields: [Object],
-      id: 'inq_2ndib1yf1C8M2yJGuwZ3Hm8K'
+      type: 'inquiry',
+      id: 'inq_y8Bqa4JpKFtxdWGkgEEdRtcC',
+      attributes: [Object],
+      relationships: [Object]
+    },
+    {
+      type: 'inquiry',
+      id: 'inq_QsYJm8yq8yjKdHqyAwKBFb64',
+      attributes: [Object],
+      relationships: [Object]
+    },
+    {
+      type: 'inquiry',
+      id: 'inq_2dB7wPwdUJYmf3ytKaxoXZRF',
+      attributes: [Object],
+      relationships: [Object]
     },
     ...
   ],
@@ -501,6 +476,64 @@ and the result will look something like:
     requestId: '86f6aed9-c170-44dd-963d-4cb870fcad66',
     runtime: 0.225322
   }
+}
+```
+
+where the `[Object]` value of the `attributes` keys will look something
+like:
+
+```javascript
+{
+  status: 'completed',
+  referenceId: '7f2ca97f-a110-4f2d-b00e-0d648857db69',
+  note: null,
+  behaviors: [Object],
+  tags: [],
+  creator: 'API',
+  reviewerComment: null,
+  createdAt: '2022-07-01T10:36:59.000Z',
+  startedAt: '2022-07-01T10:36:59.000Z',
+  completedAt: '2022-07-01T10:37:00.000Z',
+  failedAt: null,
+  decisionedAt: null,
+  expiredAt: null,
+  redactedAt: null,
+  previousStepName: null,
+  nextStepName: null,
+  nameFirst: 'Tralisha',
+  nameMiddle: null,
+  nameLast: 'Fenton',
+  birthdate: '1998-01-11',
+  addressStreet1: '327 Briarbend Rd',
+  addressStreet2: null,
+  addressCity: 'Goose Creek',
+  addressSubdivision: 'South Carolina',
+  addressSubdivisionAbbr: 'SC',
+  addressPostalCode: '294457778',
+  addressPostalCodeAbbr: '29445',
+  socialSecurityNumber: '111-22-3333',
+  emailAddress: '3hwx94mq@smuggroup.com',
+  phoneNumber: '903-991-3776',
+  fields: [Object],
+}
+
+```
+
+and the `[Object]` value of the `relationships` will look something
+like:
+
+```javascript
+{
+  account: { data: { type: 'account', id: 'act_wUWs7RWHpvWy9gnw4uqqnS3B' } },
+  template: { data: { type: 'template', id: 'tmpl_PPDFW92MxhJLomjh4gC2tb5x' } },
+  inquiryTemplate: { data: null },
+  inquiryTemplateVersion: { data: null },
+  reviewer: { data: null },
+  reports: { data: [] },
+  verifications: { data: [] },
+  sessions: { data: [ [Object] ] },
+  documents: { data: [] },
+  selfies: { data: [] }
 }
 ```
 
@@ -540,67 +573,82 @@ and the result will look something like:
 {
   success: true,
   inquiry: {
-    status: 'expired',
-    referenceId: null,
-    note: null,
-    behaviors: {
-      requestSpoofAttempts: null,
-      userAgentSpoofAttempts: null,
-      distractionEvents: null,
-      hesitationBaseline: null,
-      hesitationCount: null,
-      hesitationTime: null,
-      shortcutCopies: null,
-      shortcutPastes: null,
-      autofillCancels: null,
-      autofillStarts: null,
-      devtoolsOpen: null,
-      completionTime: null,
-      hesitationPercentage: null,
-      behaviorThreatLevel: null
+    type: 'inquiry',
+    id: 'inq_hckCfzvWeT3YEkkmVGzAuxKn',
+    attributes: {
+      status: 'expired',
+      referenceId: null,
+      note: null,
+      behaviors: {
+        requestSpoofAttempts: null,
+        userAgentSpoofAttempts: null,
+        distractionEvents: null,
+        hesitationBaseline: null,
+        hesitationCount: null,
+        hesitationTime: null,
+        shortcutCopies: null,
+        shortcutPastes: null,
+        autofillCancels: null,
+        autofillStarts: null,
+        devtoolsOpen: null,
+        completionTime: null,
+        hesitationPercentage: null,
+        behaviorThreatLevel: null
+      },
+      tags: [],
+      creator: 'bobby.baek+flexbase@withpersona.com',
+      reviewerComment: null,
+      createdAt: '2022-06-28T20:54:14.000Z',
+      startedAt: null,
+      completedAt: null,
+      failedAt: null,
+      decisionedAt: null,
+      expiredAt: '2022-06-29T20:54:31.000Z',
+      redactedAt: null,
+      previousStepName: null,
+      nextStepName: null,
+      nameFirst: null,
+      nameMiddle: null,
+      nameLast: null,
+      birthdate: null,
+      addressStreet1: null,
+      addressStreet2: null,
+      addressCity: null,
+      addressSubdivision: null,
+      addressSubdivisionAbbr: null,
+      addressPostalCode: null,
+      addressPostalCodeAbbr: null,
+      socialSecurityNumber: null,
+      emailAddress: null,
+      phoneNumber: null,
+      fields: {
+        birthdate: [Object],
+        nameLast: [Object],
+        nameFirst: [Object],
+        nameMiddle: [Object],
+        addressCity: [Object],
+        phoneNumber: [Object],
+        emailAddress: [Object],
+        addressStreet1: [Object],
+        addressStreet2: [Object],
+        addressPostalCode: [Object],
+        addressSubdivision: [Object],
+        addressCountryCode: [Object],
+        socialSecurityNumber: [Object]
+      },
     },
-    tags: [],
-    creator: 'bobby.baek+flexbase@withpersona.com',
-    reviewerComment: null,
-    createdAt: '2022-06-28T20:54:14.000Z',
-    startedAt: null,
-    completedAt: null,
-    failedAt: null,
-    decisionedAt: null,
-    expiredAt: '2022-06-29T20:54:31.000Z',
-    redactedAt: null,
-    previousStepName: null,
-    nextStepName: null,
-    nameFirst: null,
-    nameMiddle: null,
-    nameLast: null,
-    birthdate: null,
-    addressStreet1: null,
-    addressStreet2: null,
-    addressCity: null,
-    addressSubdivision: null,
-    addressSubdivisionAbbr: null,
-    addressPostalCode: null,
-    addressPostalCodeAbbr: null,
-    socialSecurityNumber: null,
-    emailAddress: null,
-    phoneNumber: null,
-    fields: {
-      birthdate: [Object],
-      nameLast: [Object],
-      nameFirst: [Object],
-      nameMiddle: [Object],
-      addressCity: [Object],
-      phoneNumber: [Object],
-      emailAddress: [Object],
-      addressStreet1: [Object],
-      addressStreet2: [Object],
-      addressPostalCode: [Object],
-      addressSubdivision: [Object],
-      addressCountryCode: [Object],
-      socialSecurityNumber: [Object]
-    },
-    id: 'inq_hckCfzvWeT3YEkkmVGzAuxKn'
+    relationships: {
+      account: { data: { type: 'account', id: 'act_wUWs7RWHpvWy9gnw4uqqnS3B' } },
+      template: { data: { type: 'template', id: 'tmpl_PPDFW92MxhJLomjh4gC2tb5x' } },
+      inquiryTemplate: { data: null },
+      inquiryTemplateVersion: { data: null },
+      reviewer: { data: null },
+      reports: { data: [] },
+      verifications: { data: [] },
+      sessions: { data: [ [Object] ] },
+      documents: { data: [] },
+      selfies: { data: [] }
+    }
   },
   details: {
     requestId: '4b1e7bcd-be12-4fe8-af6b-dc41e8b230ae',
@@ -665,81 +713,8 @@ const resp = await client.inquiry.create({
 })
 ```
 
-and the result will look something like:
-
-```javascript
-{
-  success: true,
-  inquiry: {
-    templateId: 'tmpl_PP...',
-    referenceId: '5f81c440-088a-4d71-8980-cdd2565abc8f',
-    status: 'created',
-    note: null,
-    behaviors: {
-      requestSpoofAttempts: null,
-      userAgentSpoofAttempts: null,
-      distractionEvents: null,
-      hesitationBaseline: null,
-      hesitationCount: null,
-      hesitationTime: null,
-      shortcutCopies: null,
-      shortcutPastes: null,
-      autofillCancels: null,
-      autofillStarts: null,
-      devtoolsOpen: null,
-      completionTime: null,
-      hesitationPercentage: null,
-      behaviorThreatLevel: null
-    },
-    tags: [],
-    creator: 'API',
-    reviewerComment: null,
-    createdAt: '2022-06-30T11:40:00.000Z',
-    startedAt: null,
-    completedAt: null,
-    failedAt: null,
-    decisionedAt: null,
-    expiredAt: null,
-    redactedAt: null,
-    previousStepName: null,
-    nextStepName: null,
-    nameFirst: null,
-    nameMiddle: null,
-    nameLast: null,
-    birthdate: null,
-    addressStreet1: null,
-    addressStreet2: null,
-    addressCity: null,
-    addressSubdivision: null,
-    addressSubdivisionAbbr: null,
-    addressPostalCode: null,
-    addressPostalCodeAbbr: null,
-    socialSecurityNumber: null,
-    emailAddress: null,
-    phoneNumber: null,
-    fields: {
-      nameFirst: [Object],
-      nameMiddle: [Object],
-      nameLast: [Object],
-      addressStreet1: [Object],
-      addressStreet2: [Object],
-      addressCity: [Object],
-      addressSubdivision: [Object],
-      addressPostalCode: [Object],
-      addressCountryCode: [Object],
-      birthdate: [Object],
-      emailAddress: [Object],
-      phoneNumber: [Object],
-      socialSecurityNumber: [Object]
-    },
-    id: 'inq_2rs9qsQ1D5GJgmeMK7ktnzo1'
-  },
-  details: {
-    requestId: '3fd998c3-9f42-4159-acca-531d0d8e71f8',
-    runtime: 0.23783
-  }
-}
-```
+and the result will look something very similar to the output of the `byId()`
+function.
 
 #### [Update an Inquiry](https://docs.withpersona.com/reference/apiv1inquiriesinquiry-id-3)
 
@@ -880,27 +855,35 @@ and the result will look something like:
 {
   success: true,
   verification: {
-    status: 'passed',
-    createdAt: '2022-07-01T10:12:43.000Z',
-    createdAtTs: 1656670363,
-    submittedAt: '2022-07-01T10:12:43.000Z',
-    submittedAtTs: 1656670363,
-    completedAt: '2022-07-01T10:12:43.000Z',
-    completedAtTs: 1656670363,
-    countryCode: 'US',
-    nameFirst: 'Tralisha',
-    nameMiddle: null,
-    nameLast: 'Fenton',
-    addressStreet1: '327 Briarbend Rd',
-    addressStreet2: null,
-    addressCity: 'Goose Creek',
-    addressSubdivision: 'SC',
-    addressPostalCode: '29445',
-    birthdate: '1998-01-11',
-    phoneNumber: '312-555-1212',
-    emailAddress: 'yoyo@google.com',
-    checks: [ [Object], [Object], [Object], [Object], [Object], [Object] ],
-    id: 'ver_6JxUgEi2GyMMXQ1vZUFYSGWS'
+    type: 'verification/database',
+    id: 'ver_JpPzxVnDz9P9tWs7UagHj7Gh',
+    attributes: {
+      status: 'submitted',
+      createdAt: '2022-07-06T09:03:46.000Z',
+      createdAtTs: 1657098226,
+      submittedAt: '2022-07-06T09:03:47.000Z',
+      submittedAtTs: 1657098227,
+      completedAt: null,
+      completedAtTs: null,
+      countryCode: 'US',
+      nameFirst: 'Tralisha',
+      nameMiddle: null,
+      nameLast: 'Fenton',
+      addressStreet1: '327 Briarbend Rd',
+      addressStreet2: null,
+      addressCity: 'Goose Creek',
+      addressSubdivision: 'SC',
+      addressPostalCode: '29445-7778',
+      birthdate: '1998-01-11',
+      phoneNumber: '903-991-3776',
+      emailAddress: '3hwx94mq@smuggroup.com',
+      checks: []
+    },
+    relationships: { inquiry: [Object] }
+  },
+  details: {
+    requestId: '6f0be052-502a-4e5c-8818-8df961128521',
+    runtime: 0.057535
   }
 }
 ```
@@ -1088,27 +1071,31 @@ running Database Verification for Inquiry inq_Cw4YUBJQDwSmasqN3ZVYpGri...
 TWO {
   success: true,
   verification: {
-    status: 'passed',
-    createdAt: '2022-06-30T16:25:26.000Z',
-    createdAtTs: 1656606326,
-    submittedAt: '2022-06-30T16:25:27.000Z',
-    submittedAtTs: 1656606327,
-    completedAt: '2022-06-30T16:25:27.000Z',
-    completedAtTs: 1656606327,
-    countryCode: 'US',
-    nameFirst: 'Tralisha',
-    nameMiddle: null,
-    nameLast: 'Fenton',
-    addressStreet1: '327 Briarbend Rd',
-    addressStreet2: null,
-    addressCity: 'Goose Creek',
-    addressSubdivision: 'SC',
-    addressPostalCode: '29445-7778',
-    birthdate: '1998-01-11',
-    phoneNumber: '903-991-3776',
-    emailAddress: '3hwx94mq@smuggroup.com',
-    checks: [ [Object], [Object], [Object], [Object], [Object], [Object] ],
-    id: 'ver_XmdrvsgCSSXfiSLpbL42Zywg'
+    type: 'verification/database',
+    id: 'ver_XmdrvsgCSSXfiSLpbL42Zywg',
+    attributes: {
+      status: 'passed',
+      createdAt: '2022-06-30T16:25:26.000Z',
+      createdAtTs: 1656606326,
+      submittedAt: '2022-06-30T16:25:27.000Z',
+      submittedAtTs: 1656606327,
+      completedAt: '2022-06-30T16:25:27.000Z',
+      completedAtTs: 1656606327,
+      countryCode: 'US',
+      nameFirst: 'Tralisha',
+      nameMiddle: null,
+      nameLast: 'Fenton',
+      addressStreet1: '327 Briarbend Rd',
+      addressStreet2: null,
+      addressCity: 'Goose Creek',
+      addressSubdivision: 'SC',
+      addressPostalCode: '29445-7778',
+      birthdate: '1998-01-11',
+      phoneNumber: '903-991-3776',
+      emailAddress: '3hwx94mq@smuggroup.com',
+      checks: [ [Object], [Object], [Object], [Object], [Object], [Object] ],
+    },
+    relationships: { inquiry: [Object] }
   },
   details: {
     requestId: 'e578d72c-7b96-4be5-b078-c41564f994a1',

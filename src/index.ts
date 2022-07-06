@@ -1,7 +1,6 @@
 import fetch from 'node-fetch'
 import FormData = require('formdata')
 import path from 'path'
-import snakecaseKeys from 'snakecase-keys'
 
 import { AccountApi } from './account'
 import { InquiryApi } from './inquiry'
@@ -109,9 +108,9 @@ export class Persona {
     // build up the complete url from the provided 'uri' and the 'host'
     let url = new URL(PROTOCOL+'://'+path.join(this.host, uri))
     if (query) {
-      query = snakecaseKeys(query)
       Object.keys(query).forEach(k => {
         if (something(query![k])) {
+          console.log('QUERY', k, query![k])
           url.searchParams.append(k, query![k].toString())
         }
       })
@@ -246,6 +245,19 @@ export function removeEmpty(obj: any): any {
  */
 export function mkHeaders(arg: any): any {
   let ans = {} as any
+  if (!isEmpty(arg?.idempotencyKey)) {
+    ans['Idempotency-Key'] = arg.idempotencyKey
+  }
+  return ans
+}
+
+/*
+ * Function to create the 'standard' Persona query params from the options
+ * supplied to many of the functions in this library. This just saves
+ * code and time.
+ */
+export function mkQueryParams(arg: any): any {
+  let ans = {} as any
   if (!isEmpty(arg?.beforeId)) {
     ans['page[before]'] = arg.beforeId
   }
@@ -260,9 +272,6 @@ export function mkHeaders(arg: any): any {
   }
   if (!isEmpty(arg?.filterAcctId)) {
     ans['filter[account-id]'] = arg.filterAcctId
-  }
-  if (!isEmpty(arg?.idempotencyKey)) {
-    ans['Idempotency-Key'] = arg.idempotencyKey
   }
   return ans
 }
