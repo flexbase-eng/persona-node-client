@@ -110,7 +110,6 @@ export class Persona {
     if (query) {
       Object.keys(query).forEach(k => {
         if (something(query![k])) {
-          console.log('QUERY', k, query![k])
           url.searchParams.append(k, query![k].toString())
         }
       })
