@@ -1,6 +1,6 @@
 {
   "name": "@flexbase/persona-node-client",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "Node.js Client for Persona API",
   "keywords": [
     "withpersona.com",
