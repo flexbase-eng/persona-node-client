@@ -3,7 +3,13 @@ import type { Persona, PersonaOptions, PersonaError, PersonaCallDetails } from '
 import { DatabaseApi } from './database'
 
 export interface Verification {
+  type?: string;
   id?: string;
+  attributes?: VerificationAttributes;
+  relationships?: VerificationRelationships;
+}
+
+export interface VerificationAttributes {
   status?: string;
   createdAt?: string;
   createdAtTs?: number;
@@ -31,6 +37,16 @@ export interface VerificationCheck {
   status: string;
   reasons: string[];
   metadata: any;
+}
+
+export interface VerificationRelationships {
+  inquiry: { data?: VerificationReference };
+}
+
+// this interface has a 'type' like account, inquiry, etc, and an 'id'...
+export interface VerificationReference {
+  type?: string;
+  id?: string;
 }
 
 import { isEmpty } from '../'
@@ -66,12 +82,7 @@ export class VerificationApi {
         details: resp?.details,
       }
     }
-    // build up the verification from the data out of Persona
-    const verification = {
-      ...resp?.payload?.data?.attributes,
-      id: resp?.payload?.data?.id,
-    }
-    return { success: true, verification, details: resp?.details }
+    return { success: true, verification: resp?.payload?.data, details: resp?.details }
   }
 
   /*

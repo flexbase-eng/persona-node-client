@@ -5,6 +5,7 @@ import { Persona } from '../src/index'
 
   console.log('getting List of Accounts...')
   const one = await client.account.list()
+  // console.log('ONE', one)
   if (one.success) {
     console.log(`Success! There are now ${one.accounts!.length} accounts`)
   } else {
@@ -26,6 +27,7 @@ import { Persona } from '../src/index'
   console.log('getting a single Account...')
   const twoBAcctId = 'act_GSzquZ2gyBXsJ9yKB7HJuhW7'
   const twoB = await client.account.byId(twoBAcctId)
+  // console.log('TWOB', twoB)
   if (twoB.success) {
     console.log(`Success! We found the accountId ${twoBAcctId}`)
   } else {
@@ -53,7 +55,7 @@ import { Persona } from '../src/index'
   }
   const tre = await client.account.create(jacob)
   if (tre.success) {
-    console.log(`Success! ${tre.account!.nameFirst} was created at ${tre.account!.createdAt}`)
+    console.log(`Success! ${tre.account!.attributes!.nameFirst} was created at ${tre.account!.attributes!.createdAt}`)
   } else {
     console.log(`Error! Creating Account for ${jacob.nameFirst} failed, and the output is:`)
     console.log(tre)
@@ -64,7 +66,7 @@ import { Persona } from '../src/index'
     console.log('getting the single Account we just made...')
     const hit = await client.account.byId(tre.account!.id!)
     if (hit.success) {
-      console.log(`Success! We found the accountId ${tre.account!.id} for ${hit.account!.nameFirst}`)
+      console.log(`Success! We found the accountId ${tre.account!.id} for ${hit.account!.attributes!.nameFirst}`)
     } else {
       console.log(`Error! We cannot find the accountId: ${tre.account!.id}.`)
       console.log(hit)
