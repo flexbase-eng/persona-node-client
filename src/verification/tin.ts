@@ -1,10 +1,33 @@
 import type { Persona, PersonaOptions, PersonaError, PersonaCallDetails } from '../'
-import type { Verification } from './'
+import type { VerificationRelationships, VerificationCheck } from './'
+
+export interface Verification {
+  type?: string;
+  id?: string;
+  attributes?: VerificationAttributes;
+  relationships?: VerificationRelationships;
+}
+
+export interface VerificationAttributes {
+  status?: string;
+  createdAt?: string;
+  createdAtTs?: number;
+  submittedAt?: string;
+  submittedAtTs?: number;
+  completedAt?: string;
+  completedAtTs?: number;
+  countryCode?: string;
+  nameFirst?: string;
+  nameLast?: string;
+  tin?: string;
+  tinType?: string;
+  checks: VerificationCheck[];
+}
 
 import { setTimeout } from 'timers/promises'
-import { mkHeaders, isEmpty } from '../'
+import { isEmpty } from '../'
 
-export class DatabaseApi {
+export class DatabaseTINApi {
   client: Persona
 
   constructor(client: Persona, _options?: PersonaOptions) {
@@ -12,7 +35,7 @@ export class DatabaseApi {
   }
 
   /*
-   * Function to take an 'verificationId' for a Database Verification that
+   * Function to take an 'verificationId' for a Database TIN Verification that
    * should already exist in the system, and return that, if it exists.
    */
   async byId(verificationId: string): Promise<{
@@ -21,42 +44,19 @@ export class DatabaseApi {
     error?: PersonaError,
     details?: PersonaCallDetails,
   }> {
-    const resp = await this.client.fire(
-      'GET',
-      `verification/databases/${verificationId}`,
-    )
-    if ((resp?.response?.status >= 400) || !isEmpty(resp?.payload?.errors)) {
-      return {
-        success: false,
-        error: { type: 'persona', causes: resp?.payload?.errors },
-        details: resp?.details,
-      }
-    }
-    return { success: true, verification: resp?.payload?.data, details: resp?.details }
+    return await this.client.verification.byId(verificationId)
   }
 
   /*
-   * Function to create a new Database Verification based on the provided data.
-   * This will be the person and will be attached to an Inquiry, via the
-   * inquiryId argument, and can then be submitted for verification with the
-   * submit() function.
+   * Function to create a new Database TIN Verification based on the provided
+   * data. This will be the Tax ID, or EIN, as well as the Company Name, and
+   * can then be submitted for verification with the submit() function.
    */
   async create(data: {
-    inquiryId: string,
-    nameFirst: string,
-    nameLast: string,
-    addressStreet1: string,
-    addressStreet2?: string,
-    addressCity: string,
-    addressSubdivision: string,
-    addressPostalCode: string,
-    identificationNumber: string,
-    birthdate: string,
-    phoneNumber?: string,
-    emailAddress?: string,
+    nameBusiness: string,
+    tin: string,
+    verificationTemplateId: string,
     countryCode?: string,
-  }, options?: {
-    idempotencyKey?: string,
   }): Promise<{
     success: boolean,
     verification?: Verification,
@@ -65,12 +65,12 @@ export class DatabaseApi {
   }> {
     const resp = await this.client.fire(
       'POST',
-      'verification/databases',
-      mkHeaders(options),
+      'verification/database-tins',
+      undefined,
       undefined,
       {
         data: {
-          type: 'verification/database',
+          type: 'verification/database-tin',
           attributes: { ...data }
         },
       },
@@ -86,7 +86,7 @@ export class DatabaseApi {
   }
 
   /*
-   * Function to submit a Database Verification to be processed by the
+   * Function to submit a Database TIN Verification to be processed by the
    * engine. This will return the status of that processing.
    */
   async submit(verificationId: string): Promise<{
@@ -97,7 +97,7 @@ export class DatabaseApi {
   }> {
     const resp = await this.client.fire(
       'POST',
-      `verification/databases/${verificationId}/submit`,
+      `verification/database-tins/${verificationId}/submit`,
     )
     if ((resp?.response?.status >= 400) || !isEmpty(resp?.payload?.errors)) {
       return {
@@ -110,35 +110,24 @@ export class DatabaseApi {
   }
 
   /*
-   * Function to do a synchronous Database Verification of the supplied
-   * identity data with Persona, and this really just encapsulates the
+   * Function to do a synchronous Database TIN Verification of the supplied
+   * Company data with Persona, and this really just encapsulates the
    * call to 'create()' to create the Verification, then 'submit()' to
    * submit it for verification, and then 'byId()' to get the status.
    *
    * If the Verification's status is still 'submitted', we will wait a
    * total of 20 sec in 500 msec intervals waiting for the Database
-   * Verification to be complete. The hope is that this will make it
+   * TIN Verification to be complete. The hope is that this will make it
    * a simpler synchronous call, to be used when time isn't critical.
    *
    * If an error occurs at any stage in the processing, the latest
    * results are returned, with the stage the error occurred.
    */
   async run(data: {
-    inquiryId: string,
-    nameFirst: string,
-    nameLast: string,
-    addressStreet1: string,
-    addressStreet2?: string,
-    addressCity: string,
-    addressSubdivision: string,
-    addressPostalCode: string,
-    identificationNumber: string,
-    birthdate: string,
-    phoneNumber?: string,
-    emailAddress?: string,
+    nameBusiness: string,
+    tin: string,
+    verificationTemplateId: string,
     countryCode?: string,
-  }, options?: {
-    idempotencyKey?: string,
   }): Promise<{
     success: boolean,
     stage: string,
@@ -146,8 +135,8 @@ export class DatabaseApi {
     error?: PersonaError,
     details?: PersonaCallDetails,
   }> {
-    // start with creating the Database Verification...
-    const make = await this.create(data, options)
+    // start with creating the Database TIN Verification...
+    const make = await this.create(data)
     if (!make?.success) {
       return { ...make, stage: 'create' }
     }
