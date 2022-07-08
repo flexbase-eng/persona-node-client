@@ -1,6 +1,7 @@
 import type { Persona, PersonaOptions, PersonaError, PersonaCallDetails } from '../'
 
 import { DatabaseApi } from './database'
+import { DatabaseTINApi } from './tin'
 
 export interface Verification {
   type?: string;
@@ -54,11 +55,13 @@ import { isEmpty } from '../'
 export class VerificationApi {
   client: Persona
   database: DatabaseApi
+  tin: DatabaseTINApi
 
   constructor(client: Persona, options?: PersonaOptions) {
     this.client = client
     // now construct all the specific domain objects
     this.database = new DatabaseApi(this.client, options)
+    this.tin = new DatabaseTINApi(this.client, options)
   }
 
   /*

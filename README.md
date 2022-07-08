@@ -1034,6 +1034,126 @@ go through the four stages of processing:
 The idea is that the errors are tagged with the call they occurred on,
 and that will help the caller know what happened, when.
 
+### Database TIN Verification Calls
+
+A subset of the Verification system is a Database TIN (Tax Id Number)
+Verification where the Company Name and Tax ID, or EIN, is sent, and Persona
+checks to see if indeed the Copmany Name matches the TIN, or EIN. This is
+**_not_** a look-up of one for another - but a _Verification_ that the
+pair matches.
+
+#### Retrieve Database TIN Verification
+
+You can retrieve a Database TIN Verification with simply the `verificationId`:
+
+```typescript
+const resp = await client.verification.tin.byId(verificationId)
+```
+
+and the result will look like:
+
+```javascript
+{
+  success: true,
+  verification: {
+    type: 'verification/database-tin',
+    id: 'ver_kVJEwKg2BsSGu81G78nTVdtA',
+    attributes: {
+      status: 'passed',
+      createdAt: '2022-07-08T19:18:37.000Z',
+      createdAtTs: 1657307917,
+      submittedAt: '2022-07-08T19:18:37.000Z',
+      submittedAtTs: 1657307917,
+      completedAt: '2022-07-08T19:18:37.000Z',
+      completedAtTs: 1657307917,
+      countryCode: 'US',
+      tin: '411234567',
+      tinType: 'ssn',
+      nameFirst: null,
+      nameLast: null,
+      checks: [Array]
+    },
+    relationships: { inquiry: [Object] }
+  },
+  details: {
+    requestId: 'b9553a39-fcc8-498c-9ef9-c0f4a69038aa',
+    runtime: 0.112685
+  },
+  stage: 'complete'
+}
+```
+
+which is similar in many ways to the Identity Verification, but with
+different information about the Company and not the person.
+
+#### Create a Database TIN Verification
+
+You can create a Database TIN Verification simply:
+
+```typescript
+const resp = await client.verification.tin.create({
+  nameBusiness: 'Microsoft Corp',
+  tin: '91-1144442',
+  verificationTemplateId: 'vtmpl_abcedfg...',
+  countryCode: 'US',
+})
+```
+
+and the result will look very much like the response from `byId()` for
+a general Verification.
+
+#### Submit a Database TIN Verification
+
+Once created, a Database TIN Verification must be submitted to be processed,
+and that is done simply with:
+
+```typescript
+const resp = await client.verification.tin.submit(verificationId)
+```
+
+and the result will look very much like the response from `byId()` for
+a general Verification, but the `status` in the data will likely have
+changed from `created` to `submitted`. It will then be on the caller
+to either waut for the webhook messaging of the completion of the
+Verification, or to use the `byId()` function to poll Persona until
+the `status` changes to a terminal condition.
+
+#### Synchronously Run a Database TIN Verification
+
+Because it's a simple process, it makes sense to have a _synchronous_
+way to create, submit, and monitor a Database TIN Verification so that
+you can do this "while waiting". This can be done with the code in
+the client:
+
+```typescript
+const resp = await client.verification.tin.run({
+  nameBusiness: 'Microsoft Corp',
+  tin: '91-1144442',
+  verificationTemplateId: 'vtmpl_abcedfg...',
+  countryCode: 'US',
+})
+```
+
+where the inputs are the same as the `create()` function, and the
+result will look very much like the response from `byId()` for
+a general Verification, but the `status` will be a terminal case.
+
+The one addition is the `stage` attribute of the output. This will
+go through the four stages of processing:
+
+* `create` - if there was an error in the `create()` call, this will be
+  in the output, along with the error(s).
+* `submit` - the there wa an error in the `submit()` call, this will be
+  in the output, along with the error(s)
+* `complete` - if the verification completes, then this will be in the
+  output and the `status` in the `verification` should be read for a
+  final disposition.
+* `processing` - if, after 30 sec, nothing has changed, then this will
+  be returned in the output, along with the latest data from `byId()`.
+
+The idea is that the errors are tagged with the call they occurred on,
+and that will help the caller know what happened, when.
+
 
 ## Development
 
