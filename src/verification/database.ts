@@ -166,7 +166,7 @@ export class DatabaseApi {
       // wait a bit, as we know Persona will take a few sec...
       await setTimeout(500)
       chk = await this.byId(verificationId)
-      if (chk?.success && chk?.verification?.status !== 'submitted') {
+      if (chk?.success && chk?.verification?.attributes?.completedAt) {
         return { ...chk, stage: 'complete' }
       }
       cnt = cnt + 1
