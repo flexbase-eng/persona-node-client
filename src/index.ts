@@ -5,6 +5,7 @@ import path from 'path'
 import { AccountApi } from './account'
 import { InquiryApi } from './inquiry'
 import { VerificationApi } from './verification'
+import { ReportApi } from './report'
 
 const ClientVersion = require('../package.json').version
 const PROTOCOL = 'https'
@@ -63,6 +64,27 @@ export interface PersonaCallDetails {
 }
 
 /*
+ * Persaon includes some metadata about the Report on the Report calls,
+ * and this is the structure of that report metadata.
+ */
+export interface PersonaIncluded {
+  type?: string;
+  id?: string;
+  attributes?: {
+    name: string;
+    createdAt: string;
+    updatedAt?: string;
+  };
+  meta?: {
+    version?: {
+      name: string;
+      createdAt: string;
+      updatedAt?: string;
+    };
+  };
+}
+
+/*
  * This is the main constructor of the Persona Client, and will be called
  * with something like:
  *
@@ -80,6 +102,7 @@ export class Persona {
   account: AccountApi
   inquiry: InquiryApi
   verification: VerificationApi
+  report: ReportApi
 
   constructor (apiKey: string, options?: PersonaOptions) {
     this.host = options?.host ?? PERSONA_HOST
@@ -90,6 +113,7 @@ export class Persona {
     this.account = new AccountApi(this, options)
     this.inquiry = new InquiryApi(this, options)
     this.verification = new VerificationApi(this, options)
+    this.report = new ReportApi(this, options)
   }
 
   /*
@@ -104,7 +128,12 @@ export class Persona {
     headers?: any,
     query?: { [index: string] : number | string | string[] | boolean },
     body?: object | object[] | FormData,
-  ): Promise<{ response: any, payload?: any, details?: PersonaCallDetails }> {
+  ): Promise<{
+    response: any,
+    payload?: any,
+    details?: PersonaCallDetails,
+    included?: PersonaIncluded,
+  }> {
     // build up the complete url from the provided 'uri' and the 'host'
     let url = new URL(PROTOCOL+'://'+path.join(this.host, uri))
     if (query) {
@@ -142,7 +171,8 @@ export class Persona {
         requestId: response?.headers.get('x-request-id'),
         runtime: atof(response?.headers.get('x-runtime')),
       })
-      return { response, payload, details }
+      const included = payload?.included
+      return { response, payload, details, included }
     } catch (err) {
       return { response }
     }
