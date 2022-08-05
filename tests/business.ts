@@ -1,7 +1,13 @@
 import { Persona } from '../src/index'
 
 (async () => {
-  const client = new Persona(process.env.PERSONA_API_KEY!)
+  const client = new Persona(process.env.PERSONA_API_KEY!, {
+    businessReports: {
+      adverseMediaTemplateId: 'rptp_Tnui8mpw2CmABBkrLsPi4YkV',
+      watchlistTemplateId: 'rptp_LsD1Y3SVhCbVD6bswergkUsC',
+      lookupTemplateId: 'rptp_bWqnhyyu18zP8BFR6N6bt8sL',
+    }
+  })
 
   console.log('getting Business Watchlist Report...')
   const one = await client.report.business.watchlist({ name: 'Microsoft' })

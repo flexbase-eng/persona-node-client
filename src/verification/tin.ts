@@ -29,9 +29,12 @@ import { isEmpty } from '../'
 
 export class DatabaseTINApi {
   client: Persona
+  tinTemplateId?: string
 
-  constructor(client: Persona, _options?: PersonaOptions) {
+  constructor(client: Persona, options?: PersonaOptions) {
     this.client = client
+    // now pick off any verification templates in the options
+    this.tinTemplateId = options?.verifications?.tinTemplateId
   }
 
   /*
@@ -55,7 +58,7 @@ export class DatabaseTINApi {
   async create(data: {
     nameBusiness: string,
     tin: string,
-    verificationTemplateId: string,
+    verificationTemplateId?: string,
     countryCode?: string,
   }): Promise<{
     success: boolean,
@@ -63,6 +66,8 @@ export class DatabaseTINApi {
     error?: PersonaError,
     details?: PersonaCallDetails,
   }> {
+    // pull in the template id if we have it in the client
+    data.verificationTemplateId = data.verificationTemplateId ?? this.tinTemplateId
     const resp = await this.client.fire(
       'POST',
       'verification/database-tins',
@@ -126,7 +131,7 @@ export class DatabaseTINApi {
   async run(data: {
     nameBusiness: string,
     tin: string,
-    verificationTemplateId: string,
+    verificationTemplateId?: string,
     countryCode?: string,
   }): Promise<{
     success: boolean,
@@ -135,6 +140,8 @@ export class DatabaseTINApi {
     error?: PersonaError,
     details?: PersonaCallDetails,
   }> {
+    // pull in the template id if we have it in the client
+    data.verificationTemplateId = data.verificationTemplateId ?? this.tinTemplateId
     // start with creating the Database TIN Verification...
     const make = await this.create(data)
     if (!make?.success) {

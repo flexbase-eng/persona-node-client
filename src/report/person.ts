@@ -9,9 +9,16 @@ import type { Report } from './'
 
 export class PersonApi {
   client: Persona
+  adverseMediaTemplateId?: string
+  watchlistTemplateId?: string
+  pepTemplateId?: string
 
-  constructor(client: Persona, _options?: PersonaOptions) {
+  constructor(client: Persona, options?: PersonaOptions) {
     this.client = client
+    // now extract the report template ids from the options
+    this.adverseMediaTemplateId = options?.personReports?.adverseMediaTemplateId
+    this.watchlistTemplateId = options?.personReports?.watchlistTemplateId
+    this.pepTemplateId = options?.personReports?.pepTemplateId
   }
 
   /*
@@ -25,6 +32,7 @@ export class PersonApi {
     nameFirst: string,
     nameLast: string,
     birthdate?: string,
+    reportTemplateId?: string;
     synchronous?: boolean,
   }): Promise<{
     success: boolean,
@@ -34,12 +42,12 @@ export class PersonApi {
     details?: PersonaCallDetails,
     included?: PersonaIncluded,
   }> {
-    const { synchronous, ...query } = data
+    const { reportTemplateId, synchronous, ...query } = data
     return await this.client.report.run(
       {
         data: {
           attributes: { ...query,
-            report_template_id: 'rptp_g8uZZ6A9cLL6A7UBbDunJGv3',
+            reportTemplateId: reportTemplateId ?? this.adverseMediaTemplateId,
           }
         }
       },
@@ -58,6 +66,7 @@ export class PersonApi {
     nameFirst: string,
     nameLast: string,
     birthdate?: string,
+    reportTemplateId?: string;
     synchronous?: boolean,
   }): Promise<{
     success: boolean,
@@ -67,12 +76,12 @@ export class PersonApi {
     details?: PersonaCallDetails,
     included?: PersonaIncluded,
   }> {
-    const { synchronous, ...query } = data
+    const { reportTemplateId, synchronous, ...query } = data
     return await this.client.report.run(
       {
         data: {
           attributes: { ...query,
-            reportTemplateId: 'rptp_wMAMFndffU578nMxAqMpJx2T',
+            reportTemplateId: reportTemplateId ?? this.watchlistTemplateId,
           }
         }
       },
@@ -91,6 +100,7 @@ export class PersonApi {
     term: string,
     birthdate?: string,
     countryCode?: string,
+    reportTemplateId?: string;
     synchronous?: boolean,
   }): Promise<{
     success: boolean,
@@ -100,12 +110,12 @@ export class PersonApi {
     details?: PersonaCallDetails,
     included?: PersonaIncluded,
   }> {
-    const { synchronous, ...query } = data
+    const { reportTemplateId, synchronous, ...query } = data
     return await this.client.report.run(
       {
         data: {
           attributes: {
-            reportTemplateId: 'rptp_JcTanFNdJKrMzwQbWaywVLRy',
+            reportTemplateId: reportTemplateId ?? this.pepTemplateId,
             query,
           }
         }

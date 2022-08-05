@@ -31,6 +31,20 @@ export interface PersonaOptions {
   apiKey?: string;
   keyInflection?: string;
   personaVersion?: string;
+  verifications?: {
+    databaseTemplateId?: string;
+    tinTemplateId?: string;
+  };
+  businessReports?: {
+    adverseMediaTemplateId?: string;
+    watchlistTemplateId?: string;
+    lookupTemplateId?: string;
+  };
+  personReports?: {
+    adverseMediaTemplateId?: string;
+    watchlistTemplateId?: string;
+    pepTemplateId?: string;
+  };
 }
 
 /*

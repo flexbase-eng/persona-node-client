@@ -9,9 +9,16 @@ import type { Report } from './'
 
 export class BusinessApi {
   client: Persona
+  adverseMediaTemplateId?: string
+  watchlistTemplateId?: string
+  lookupTemplateId?: string
 
-  constructor(client: Persona, _options?: PersonaOptions) {
+  constructor(client: Persona, options?: PersonaOptions) {
     this.client = client
+    // now pick off any report templates in the options
+    this.adverseMediaTemplateId = options?.businessReports?.adverseMediaTemplateId
+    this.watchlistTemplateId = options?.businessReports?.watchlistTemplateId
+    this.lookupTemplateId = options?.businessReports?.lookupTemplateId
   }
 
   /*
@@ -24,6 +31,7 @@ export class BusinessApi {
   async adverseMedia(data: {
     name: string,
     referenceId?: string,
+    reportTemplateId?: string;
     synchronous?: boolean,
   }): Promise<{
     success: boolean,
@@ -37,8 +45,8 @@ export class BusinessApi {
       {
         data: {
           attributes: {
-            report_template_id: 'rptp_Tnui8mpw2CmABBkrLsPi4YkV',
-            reference_id: data.referenceId,
+            reportTemplateId: data.reportTemplateId ?? this.adverseMediaTemplateId,
+            referenceId: data.referenceId,
             term: data.name,
           }
         }
@@ -57,6 +65,7 @@ export class BusinessApi {
   async watchlist(data: {
     name: string,
     referenceId?: string,
+    reportTemplateId?: string;
     synchronous?: boolean,
   }): Promise<{
     success: boolean,
@@ -70,7 +79,7 @@ export class BusinessApi {
       {
         data: {
           attributes: {
-            report_template_id: 'rptp_LsD1Y3SVhCbVD6bswergkUsC',
+            report_template_id: data.reportTemplateId ?? this.watchlistTemplateId,
             reference_id: data.referenceId,
             term: data.name,
           }
@@ -99,6 +108,7 @@ export class BusinessApi {
       nameFirst?: string,
       nameLast?: string,
     }[],
+    reportTemplateId?: string;
     synchronous?: boolean,
   }): Promise<{
     success: boolean,
@@ -108,12 +118,12 @@ export class BusinessApi {
     details?: PersonaCallDetails,
     included?: PersonaIncluded,
   }> {
-    const { synchronous, ...query } = data
+    const { reportTemplateId, synchronous, ...query } = data
     return await this.client.report.run(
       {
         data: {
           attributes: {
-            report_template_id: 'rptp_bWqnhyyu18zP8BFR6N6bt8sL',
+            report_template_id: reportTemplateId ?? this.lookupTemplateId,
             query,
           }
         }

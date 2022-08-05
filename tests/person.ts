@@ -1,7 +1,13 @@
 import { Persona } from '../src/index'
 
 (async () => {
-  const client = new Persona(process.env.PERSONA_API_KEY!)
+  const client = new Persona(process.env.PERSONA_API_KEY!, {
+    personReports: {
+      adverseMediaTemplateId: 'rptp_g8uZZ6A9cLL6A7UBbDunJGv3',
+      watchlistTemplateId: 'rptp_wMAMFndffU578nMxAqMpJx2T',
+      pepTemplateId: 'rptp_JcTanFNdJKrMzwQbWaywVLRy',
+    }
+  })
 
   console.log('getting Person Watchlist Report...')
   const one = await client.report.person.watchlist({

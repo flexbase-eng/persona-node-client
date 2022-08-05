@@ -1,15 +1,17 @@
 import { Persona } from '../src/index'
 
 (async () => {
-  const client = new Persona(process.env.PERSONA_API_KEY!)
-
-  const TEMPLATE_ID = 'tmpl_PPDFW92MxhJLomjh4gC2tb5x'
+  const client = new Persona(process.env.PERSONA_API_KEY!, {
+    verifications: {
+      databaseTemplateId: 'tmpl_PPDFW92MxhJLomjh4gC2tb5x',
+    }
+  })
 
   const refId = '2eeada65-7f01-44d8-a868-33dd0bf445d9'
 
   console.log('creating new Inquiry based off Database Template...')
   const one = await client.inquiry.create({
-    templateId: TEMPLATE_ID,
+    templateId: client.verification.database.databaseTemplateId,
     referenceId: refId,
   })
   // console.log('ONE', one)

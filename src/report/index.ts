@@ -216,7 +216,7 @@ export class ReportApi {
       await setTimeout(500)
       chk = await this.byId(reportId)
       if (chk?.success && chk?.report?.attributes?.completedAt) {
-        return { ...chk }
+        return chk
       }
       cnt = cnt + 1
     }

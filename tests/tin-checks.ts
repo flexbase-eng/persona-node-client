@@ -1,16 +1,17 @@
 import { Persona } from '../src/index'
 
 (async () => {
-  const client = new Persona(process.env.PERSONA_API_KEY!)
-
-  const TEMPLATE_ID = 'vtmpl_gcbNYEjaVZTDZnLSQyK1THEX'
+  const client = new Persona(process.env.PERSONA_API_KEY!, {
+    verifications: {
+      tinTemplateId: 'vtmpl_gcbNYEjaVZTDZnLSQyK1THEX',
+    }
+  })
 
   let company = { nameBusiness: 'Microsoft Corp', tin: '91-1144442' }
 
   console.log(`creating Database TIN Verification for ${company.nameBusiness}...`)
   const one = await client.verification.tin.create({
     ...company,
-    verificationTemplateId: TEMPLATE_ID,
     countryCode: 'US',
   })
   // console.log('ONE', one)
@@ -48,7 +49,6 @@ import { Persona } from '../src/index'
   console.log(`running Database TIN Verification for ${company.nameBusiness}...`)
   const fou = await client.verification.tin.run({
     ...company,
-    verificationTemplateId: TEMPLATE_ID,
     countryCode: 'US',
   })
   // console.log('FOU', fou)
@@ -63,7 +63,6 @@ import { Persona } from '../src/index'
   company = { nameBusiness: 'Flexbase', tin: '41-1234567' }
   const fiv = await client.verification.tin.run({
     ...company,
-    verificationTemplateId: TEMPLATE_ID,
     countryCode: 'US',
   })
   console.log('FIV', fiv)
