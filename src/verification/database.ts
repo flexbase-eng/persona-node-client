@@ -6,9 +6,12 @@ import { mkHeaders, isEmpty } from '../'
 
 export class DatabaseApi {
   client: Persona
+  databaseTemplateId?: string
 
-  constructor(client: Persona, _options?: PersonaOptions) {
+  constructor(client: Persona, options?: PersonaOptions) {
     this.client = client
+    // now pick off any verification templates in the options
+    this.databaseTemplateId = options?.verifications?.databaseTemplateId
   }
 
   /*
