@@ -248,6 +248,7 @@ export class ReportApi {
     error?: PersonaError,
     details?: PersonaCallDetails,
     included?: PersonaIncluded,
+    request?: object | object[],
   }> {
     const resp = await this.client.fire('POST', 'reports', undefined, undefined, body)
     if ((resp?.response?.status >= 400) || !isEmpty(resp?.payload?.errors)) {
@@ -255,6 +256,7 @@ export class ReportApi {
         success: false,
         error: { type: 'persona', causes: resp?.payload?.errors },
         details: resp?.details,
+        request: body,
       } as any
       if (synchronous) {
         ans.stage = 'create'
